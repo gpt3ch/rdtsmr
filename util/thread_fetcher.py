@@ -18,20 +18,20 @@ class ThreadFetcher:
         )
         # self.reddit = praw.Reddit("bot1", user_agent="reddit summarizer user agent")
         self.reddit.read_only = True
-        nltk.download('punkt')
-        nltk.download('stopwords')
-        nltk.download('wordnet')
+        # nltk.download('punkt')
+        # nltk.download('stopwords')
+        # nltk.download('wordnet')
     
-    # @st.cache_data(ttl=3600)
+    @st.cache_data(ttl=3600)
     def fetchThread(_self, url):
         comment_arr = []
         submission = _self.reddit.submission(url=url)
         submission.comments.replace_more(limit=None)
         comment_list = submission.comments.list()
-        for comment in comment_list:
-            tokens = _self.tokenize(comment.body)
-            comment_arr.append(tokens)
-        return (submission, comment_arr)
+        # for comment in comment_list:
+        #     tokens = _self.tokenize(comment.body)
+        #     comment_arr.append(tokens)
+        return (submission, ''.join(str(comment.body) for comment in comment_list))
 
     def tokenize(self, text):
         #Tokenization
